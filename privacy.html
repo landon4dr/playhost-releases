@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlayHost – Privacy</title>
+<style>
+  :root { --bg: #f6f7f9; --surface: #ffffff; --text: #1c1f24; --muted: #5d6673; --border: #d9dde3; --accent: #2f8f4e; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #15171b; --surface: #1e2126; --text: #e8eaed; --muted: #9aa3ae; --border: #30353c; --accent: #3fae63; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { margin: 0 0 4px; } h2 { margin: 28px 0 8px; font-size: 1.2rem; }
+  p, li { color: var(--text); } .muted { color: var(--muted); } a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="./">← PlayHost</a></p>
+  <h1>Privacy</h1>
+  <p class="muted">Last updated: October 6, 2026</p>
+
+  <p>PlayHost is a desktop app that runs Minecraft servers on your own computer. It does not collect, store or sell personal information. There are no accounts, no ads and no analytics.</p>
+
+  <h2>What stays on your computer</h2>
+  <p>Your servers, worlds, mods, backups, settings, the Minecraft name you type in, and PlayHost’s log files are stored only on your computer. PlayHost never uploads them.</p>
+
+  <h2>What PlayHost connects to</h2>
+  <p>To do its job, PlayHost downloads files and looks things up on services you ask it to use:</p>
+  <ul>
+    <li><strong>Mojang / Minecraft</strong>: Minecraft server files, and looking up a player’s Minecraft account when you add them to the whitelist or admin list.</li>
+    <li><strong>Java downloads</strong> (Eclipse Adoptium): the Java version your server needs.</li>
+    <li><strong>Mod loaders</strong> (Fabric, Forge, NeoForge) and <strong>Modrinth</strong> / <strong>CurseForge</strong>: mods, modpacks and search.</li>
+    <li><strong>playit.gg</strong>, only if you choose to invite friends that way: it creates the address friends use to join. Its own <a href="https://playit.gg/privacy">privacy policy</a> applies.</li>
+    <li><strong>GitHub</strong>: checking for and downloading PlayHost updates (not for Microsoft Store installs, which the Store updates).</li>
+  </ul>
+  <p>These services see the request and your internet address, as with any download. PlayHost doesn’t send them anything about you beyond what each request needs.</p>
+
+  <h2>Copy diagnostics and crash reports</h2>
+  <p>If something goes wrong, PlayHost can copy a summary to your clipboard so you can paste it to someone helping you. Nothing is sent automatically. The summary leaves out player names, server names, your Windows username and internet addresses.</p>
+
+  <h2>Children</h2>
+  <p>PlayHost doesn’t collect personal information from anyone, including children.</p>
+
+  <h2>Questions</h2>
+  <p>Open an issue or contact us through <a href="https://github.com/landon4dr/playhost-releases">github.com/landon4dr/playhost-releases</a>.</p>
+
+  <p class="muted">PlayHost is not an official Minecraft product. It is not approved by or associated with Mojang or Microsoft.</p>
+</main>
+</body>
+</html>
