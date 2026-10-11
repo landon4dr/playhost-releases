@@ -40,6 +40,8 @@
     color: var(--accent); font-weight: 700; display: grid; place-items: center; }
   .note { background: var(--accent-soft); border-radius: 14px; padding: 18px 22px; }
   .note p { margin: 6px 0 0; }
+  pre { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; overflow-x: auto; font-size: 0.85rem; }
+  #linux-install h3 { margin-top: 24px; }
   details { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; }
   details + details { margin-top: 10px; }
   summary { cursor: pointer; font-weight: 600; }
@@ -59,6 +61,7 @@
       Download for Windows
     </a>
     <p class="meta" id="meta">Free · Windows 10 and 11 · Updates itself</p>
+    <p class="meta" id="linux" hidden>Linux (preview): <a id="linux-appimage" href="#">AppImage</a> · <a id="linux-deb" href="#">.deb</a> · <a href="#linux-install">install</a></p>
   </header>
 
   <section aria-labelledby="what">
@@ -80,13 +83,19 @@
       <li><span>If Windows says <strong>“Windows protected your PC”</strong>, click <strong>More info</strong>, then <strong>Run anyway</strong>. PlayHost is new and not code-signed yet, so Windows doesn’t recognise it.</span></li>
       <li><span>Follow the installer, then open PlayHost and click <strong>Make my first server</strong>.</span></li>
     </ol>
+    <div id="linux-install" hidden>
+      <h3>Linux (preview)</h3>
+      <pre><code>chmod +x PlayHost_*_amd64.AppImage &amp;&amp; ./PlayHost_*_amd64.AppImage   # any distro, updates itself
+sudo apt install ./PlayHost_*_amd64.deb                              # Debian/Ubuntu/Mint</code></pre>
+      <p class="meta">x86_64, WebKitGTK 4.1 (Ubuntu 22.04+, Fedora 37+, Mint 21+). Java is downloaded for you.</p>
+    </div>
   </section>
 
   <section aria-labelledby="faq">
     <h2 id="faq">Questions</h2>
     <details><summary>Is it free?</summary><p>Yes. Everything you need to make a server, add mods and play with friends is free, with no ads.</p></details>
     <details><summary>Do I need to install Java or anything else?</summary><p>No. PlayHost downloads the right Java for each Minecraft version by itself.</p></details>
-    <details><summary>Does it work with Minecraft Bedrock, Mac or Linux?</summary><p>Not yet: PlayHost is for Minecraft: Java Edition on Windows for now.</p></details>
+    <details><summary>Does it work with Minecraft Bedrock, Mac or Linux?</summary><p>Bedrock and Mac: not yet, PlayHost is for Minecraft: Java Edition. Linux: a preview is available (see Installing).</p></details>
     <details><summary>Does PlayHost send my data anywhere?</summary><p>No. Your servers, worlds and backups stay on your PC. PlayHost has no accounts.</p></details>
     <details><summary>Does my PC need to stay on?</summary><p>Yes, the server runs on your PC, so friends can join while it’s on and PlayHost is running. You can close the window and PlayHost keeps the server going from the tray by the clock.</p></details>
   </section>
@@ -101,6 +110,15 @@
   fetch("https://api.github.com/repos/landon4dr/playhost-releases/releases/latest")
     .then((r) => (r.ok ? r.json() : Promise.reject()))
     .then((release) => {
+      // Linux shows once the release has its Linux files (GitHub adds them ~25 min after Windows).
+      const appimage = release.assets.find((a) => /\.AppImage$/.test(a.name));
+      const deb = release.assets.find((a) => /\.deb$/.test(a.name));
+      if (appimage && deb) {
+        document.getElementById("linux-appimage").href = appimage.browser_download_url;
+        document.getElementById("linux-deb").href = deb.browser_download_url;
+        document.getElementById("linux").hidden = false;
+        document.getElementById("linux-install").hidden = false;
+      }
       const exe = release.assets.find((a) => /setup\.exe$/i.test(a.name));
       if (!exe) return;
       document.getElementById("download").href = exe.browser_download_url;
