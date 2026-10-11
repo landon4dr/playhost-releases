@@ -110,20 +110,29 @@ sudo apt install ./PlayHost_*_amd64.deb                              # Debian/Ub
   fetch("https://api.github.com/repos/landon4dr/playhost-releases/releases/latest")
     .then((r) => (r.ok ? r.json() : Promise.reject()))
     .then((release) => {
-      // Linux shows once the release has its Linux files (GitHub adds them ~25 min after Windows).
-      const appimage = release.assets.find((a) => /\.AppImage$/.test(a.name));
-      const deb = release.assets.find((a) => /\.deb$/.test(a.name));
-      if (appimage && deb) {
-        document.getElementById("linux-appimage").href = appimage.browser_download_url;
-        document.getElementById("linux-deb").href = deb.browser_download_url;
-        document.getElementById("linux").hidden = false;
-        document.getElementById("linux-install").hidden = false;
-      }
       const exe = release.assets.find((a) => /setup\.exe$/i.test(a.name));
       if (!exe) return;
       document.getElementById("download").href = exe.browser_download_url;
       const mb = (exe.size / 1024 / 1024).toFixed(1);
       document.getElementById("meta").textContent = `Version ${release.tag_name.replace(/^v/, "")} · ${mb} MB · Free · Windows 10 and 11`;
+    })
+    .catch(() => {});
+  // Linux: the newest release that has both Linux files. GitHub adds them ~25 min after the
+  // Windows release, so right after a release (or if that build failed) this is the one before.
+  fetch("https://api.github.com/repos/landon4dr/playhost-releases/releases?per_page=10")
+    .then((r) => (r.ok ? r.json() : Promise.reject()))
+    .then((releases) => {
+      for (const release of releases) {
+        if (release.draft || release.prerelease) continue;
+        const appimage = release.assets.find((a) => /\.AppImage$/.test(a.name));
+        const deb = release.assets.find((a) => /\.deb$/.test(a.name));
+        if (!appimage || !deb) continue;
+        document.getElementById("linux-appimage").href = appimage.browser_download_url;
+        document.getElementById("linux-deb").href = deb.browser_download_url;
+        document.getElementById("linux").hidden = false;
+        document.getElementById("linux-install").hidden = false;
+        return;
+      }
     })
     .catch(() => {});
 </script>
