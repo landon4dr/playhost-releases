@@ -56,11 +56,12 @@
     <svg class="logo" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="200" fill="#2f8f4e"/><rect x="232" y="232" width="560" height="560" rx="48" fill="#5cc37a"/><path d="M432 372 L672 512 L432 652 Z" fill="#fff"/></svg>
     <h1>Host Minecraft with your friends</h1>
     <p class="tagline">PlayHost sets up and runs your own Minecraft Java server on your PC, with mods, plain-language crash help, backups and easy invites. No tech skills needed.</p>
-    <a class="download" id="download" href="https://github.com/landon4dr/playhost-releases/releases/latest">
+    <a class="download" id="download" href="https://apps.microsoft.com/detail/9N02RBP7LWMJ">
       <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.4l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
-      Download for Windows
+      Get it from Microsoft Store
     </a>
-    <p class="meta" id="meta">Free · Windows 10 and 11 · Updates itself</p>
+    <p class="meta">Free · Windows 10 and 11 · Updates itself</p>
+    <p class="meta" id="direct">Or <a id="direct-link" href="https://github.com/landon4dr/playhost-releases/releases/latest">download the installer</a> <span id="direct-meta"></span>(Windows may warn you, see <a href="#install">Installing</a>)</p>
     <p class="meta" id="linux" hidden>Linux (preview): <a id="linux-appimage" href="#">AppImage</a> · <a id="linux-deb" href="#">.deb</a> · <a href="#linux-install">install</a></p>
   </header>
 
@@ -79,10 +80,10 @@
   <section aria-labelledby="install">
     <h2 id="install">Installing</h2>
     <ol class="steps">
-      <li><span>Click <strong>Download for Windows</strong> and open the file.</span></li>
-      <li><span>If Windows says <strong>“Windows protected your PC”</strong>, click <strong>More info</strong>, then <strong>Run anyway</strong>. PlayHost is new and not code-signed yet, so Windows doesn’t recognise it.</span></li>
-      <li><span>Follow the installer, then open PlayHost and click <strong>Make my first server</strong>.</span></li>
+      <li><span>Click <strong>Get it from Microsoft Store</strong>, then <strong>Get</strong> (or <strong>Install</strong>).</span></li>
+      <li><span>Open PlayHost and click <strong>Make my first server</strong>.</span></li>
     </ol>
+    <p class="meta">Using the installer instead? If Windows says <strong>“Windows protected your PC”</strong>, click <strong>More info</strong>, then <strong>Run anyway</strong>. The installer isn’t code-signed yet, so Windows doesn’t recognise it. The Store version doesn’t show this.</p>
     <div id="linux-install" hidden>
       <h3>Linux (preview)</h3>
       <pre><code>chmod +x PlayHost_*_amd64.AppImage &amp;&amp; ./PlayHost_*_amd64.AppImage   # any distro, updates itself
@@ -106,15 +107,15 @@ sudo apt install ./PlayHost_*_amd64.deb                              # Debian/Ub
   </footer>
 </div>
 <script>
-  // Point the button straight at the newest installer (the link above works without this).
+  // Point the installer link straight at the newest installer (the link above works without this).
   fetch("https://api.github.com/repos/landon4dr/playhost-releases/releases/latest")
     .then((r) => (r.ok ? r.json() : Promise.reject()))
     .then((release) => {
       const exe = release.assets.find((a) => /setup\.exe$/i.test(a.name));
       if (!exe) return;
-      document.getElementById("download").href = exe.browser_download_url;
+      document.getElementById("direct-link").href = exe.browser_download_url;
       const mb = (exe.size / 1024 / 1024).toFixed(1);
-      document.getElementById("meta").textContent = `Version ${release.tag_name.replace(/^v/, "")} · ${mb} MB · Free · Windows 10 and 11`;
+      document.getElementById("direct-meta").textContent = `(version ${release.tag_name.replace(/^v/, "")}, ${mb} MB) `;
     })
     .catch(() => {});
   // Linux: the newest release that has both Linux files. GitHub adds them ~25 min after the

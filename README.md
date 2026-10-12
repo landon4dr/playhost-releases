@@ -5,8 +5,8 @@ and playing with friends.
 
 **Download page: https://landon4dr.github.io/playhost-releases/**
 
-Or get the newest `PlayHost_..._x64-setup.exe` from [Releases](../../releases/latest).
-PlayHost keeps itself up to date after that.
+Windows: get it from the [Microsoft Store](https://apps.microsoft.com/detail/9N02RBP7LWMJ), or the newest
+`PlayHost_..._x64-setup.exe` from [Releases](../../releases/latest). PlayHost keeps itself up to date after that.
 
 This repository only holds the installers and the update file PlayHost checks. The source code
 is not here.
